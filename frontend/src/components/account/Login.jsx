@@ -32,6 +32,15 @@ const Text = styled(Typography)`
     font-size: 16px;
 `;
 
+const Error = styled(Typography)`
+    font-size: 10px;
+    color: #ff6161;
+    line-height: 0;
+    margin-top: 10px;
+    font-weight: 600;
+`
+
+
 const signupInitialValues = {
     name: '',
     username: '',
@@ -44,6 +53,7 @@ const Login = () => {
 
     const [account, toggleAccount] = useState('login');
     const [signup, setSignup] = useState(signupInitialValues);
+    const [error, setError] = useState('');
 
     const toggleSignup = () => {
         account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
@@ -54,7 +64,21 @@ const Login = () => {
     }
 
     const signupUser = async () => {
-        let response = await API.userSignup(signup);
+
+        try{
+            let response = await API.userSignup(signup);
+            if(response.isSuccess){
+                setSignup(signupInitialValues);
+                toggleAccount('login');
+            }
+            else{
+                setError('Something went wrong! please try again later');
+            }
+        }
+        catch(error){
+            console.log(error.message);
+        }
+        
     }
 
     return (
@@ -66,6 +90,9 @@ const Login = () => {
                     <Wrapper>
                         <TextField variant="filled" label="Username" />
                         <TextField variant="filled" label="Password" />
+
+                        { error && <Error>{error}</Error> }
+
                         <Button variant="contained">Login</Button>
                         <Text style={{textAlign:'center'}}>OR</Text>
                         <Button onClick={() => toggleSignup()}>REGISTER HERE</Button>
@@ -75,6 +102,8 @@ const Login = () => {
                         <TextField variant="filled" onChange={(e) => onInputchange(e)} name='name' label="Name" />
                         <TextField variant="filled" onChange={(e) => onInputchange(e)} name='username' label="Username" />
                         <TextField variant="filled" onChange={(e) => onInputchange(e)} name='password' label="Password" />
+
+                        { error && <Error>{error}</Error> }
 
                         <Button variant="contained" onClick={() => signupUser()}>SIGNUP</Button>
                         <Text style={{textAlign:'center'}}>OR</Text>
