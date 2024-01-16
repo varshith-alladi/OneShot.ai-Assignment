@@ -40,6 +40,10 @@ const Error = styled(Typography)`
     font-weight: 600;
 `
 
+const loginInitialValues = {
+    username: '',
+    password: ''
+}
 
 const signupInitialValues = {
     name: '',
@@ -53,6 +57,7 @@ const Login = () => {
 
     const [account, toggleAccount] = useState('login');
     const [signup, setSignup] = useState(signupInitialValues);
+    const [login, setLogin] = useState(loginInitialValues);
     const [error, setError] = useState('');
 
     const toggleSignup = () => {
@@ -78,8 +83,28 @@ const Login = () => {
         catch(error){
             console.log(error.message);
         }
-        
     }
+
+    const onValueChange = (e) => {
+        setLogin({ ...login, [e.target.name]: e.target.value });
+    }
+
+    const loginUser = async () => {
+        try{
+            let response = await API.userLogin(login);
+            if(response.isSuccess){
+                setError('');
+            }
+            else{
+                setError('Something went wrong! please try again later');
+            }
+        }
+        catch(error){
+            console.log(error.message);
+        }
+    }
+
+
 
     return (
         <Component>
@@ -88,12 +113,12 @@ const Login = () => {
                 {
                 account === 'login' ? 
                     <Wrapper>
-                        <TextField variant="filled" label="Username" />
-                        <TextField variant="filled" label="Password" />
+                        <TextField variant="filled" value={login.username} onChange={(e) => onValueChange(e)} name='username' label="Username" />
+                        <TextField variant="filled" value={login.password} onChange={(e) => onValueChange(e)} name='password' label="Password" />
 
                         { error && <Error>{error}</Error> }
 
-                        <Button variant="contained">Login</Button>
+                        <Button variant="contained" onClick={() => loginUser()}>Login</Button>
                         <Text style={{textAlign:'center'}}>OR</Text>
                         <Button onClick={() => toggleSignup()}>REGISTER HERE</Button>
                     </Wrapper>
