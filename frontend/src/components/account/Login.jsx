@@ -94,6 +94,9 @@ const Login = () => {
             let response = await API.userLogin(login);
             if(response.isSuccess){
                 setError('');
+
+                sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
+                sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
             }
             else{
                 setError('Something went wrong! please try again later');
