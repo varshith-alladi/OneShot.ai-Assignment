@@ -53,7 +53,7 @@ const signupInitialValues = {
     password: ''
 };
 
-const Login = () => {
+const Login = ({isUserAuthenticated}) => {
 
     const imageURL = 'https://revenuearchitects.com/wp-content/uploads/2017/02/Blog_pic-450x255.png';
 
@@ -62,7 +62,7 @@ const Login = () => {
     const [login, setLogin] = useState(loginInitialValues);
     const [error, setError] = useState('');
 
-    const setAccount = useContext(DataContext);
+    const {setAccount} = useContext(DataContext);
     const navigate = useNavigate();
 
     const toggleSignup = () => {
@@ -96,8 +96,9 @@ const Login = () => {
 
     const loginUser = async () => {
         try{
+
             let response = await API.userLogin(login);
-            if(response.isSuccess){
+            if (response.isSuccess) {
                 setError('');
 
                 sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
@@ -106,8 +107,10 @@ const Login = () => {
                 setAccount({username: response.data.username, name: response.data.name});
                 // console.log("succesfull login")
 
+                isUserAuthenticated(true);
+                console.log("hiiii")
                 navigate('/');
-            }
+            }       
             else{
                 setError('Something went wrong! please try again later');
             }
