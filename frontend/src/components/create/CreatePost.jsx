@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 
 import { Box, styled, FormControl, InputBase, Button, TextareaAutosize } from '@mui/material'
 import { AddCircle as Add } from '@mui/icons-material';
-import { useNavigate, useLocation, useLoaderData } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { DataContext } from '../../context/DataProvider';
 import { API } from '../../service/api';
 
@@ -56,32 +56,53 @@ const CreatePost = () => {
     const [file, setFile] = useState('');
     const { account } = useContext(DataContext);
 
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const url = post.picture ? post.picture : 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
-
-    const location = useLocation();
 
     useEffect(() => {
         const getImage = async () => { 
             if(file) {
-                const data = new FormData();
-                data.append("name", file.name);
-                data.append("file", file);
-                
-                const response = await API.uploadFile(data);
-                post.picture = response.data;
+                try{
+                    // console.log(file)
+                    const data = new FormData();
+                    data.append("name", file.name);
+                    data.append("file", file);
+                    // console.log(file);
+                    const response = await API.uploadFile(data);
+                    post.picture = response.data;
+                } catch (error) {
+                    console.log("error while loading file: ", error);
+                    console.log(file)
+                }
             }
         }
         getImage();
         post.categories = location.search?.split('=')[1] || 'All';
+        // console.log(account.username)
         post.username = account.username;
-    }, [file])
+    }, [file]);
 
 
 
     const handleChange = (e) => {
         setPost({ ...post, [e.target.name]: e.target.value });
     }
+
+
+    const savePost = async () => {
+        try{
+            let response = await API.createPost(post);
+            if(response.isSuccess){
+                navigate('/');
+            }
+        } catch (error){
+            console.log(error)
+        }
+    }
+
+
 
     return (
         <Container>
@@ -99,7 +120,7 @@ const CreatePost = () => {
                 />
 
                 <InputTextField placeholder='Title' onChange={(e) => handleChange(e)} name='title' />
-                <Button variant='contained'>Publish</Button>
+                <Button variant='contained' onClick={() => savePost()}>Publish</Button>
 
             </StyledFormControl>
 
@@ -107,7 +128,7 @@ const CreatePost = () => {
                 rowsMin={5}
                 placeholder="Please write your description here..."
                 name='description'
-                // onChange={(e) => handleChange(e)}
+                onChange={(e) => handleChange(e)}
             />
         </Container>
     )
