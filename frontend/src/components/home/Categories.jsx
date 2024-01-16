@@ -11,7 +11,7 @@ const StyledTable = styled(Table)`
 const StyledButton = styled(Button)`
     margin: 20px;
     width: 85%;
-    background: #6495ED;
+    background: #2e8b57;
     color: #fff;
     text-decoration: none;
 `;
@@ -27,7 +27,7 @@ const Categories = () => {
     
     return (
         <>
-            <Link to={`/create?category=${category || ''}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/create`} style={{ textDecoration: 'none' }}>
                 <StyledButton variant="contained">Create Blog</StyledButton>
             </Link>
             

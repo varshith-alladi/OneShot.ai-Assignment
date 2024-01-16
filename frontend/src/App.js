@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-
 import Login from './components/account/Login';
 import Home from './components/home/home';
 import Header from './components/header/Header';
+import CreatePost from './components/create/CreatePost';
 
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
@@ -38,6 +39,11 @@ function App() {
             <Route path='/' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
               <Route path='/' element={<Home />} />
             </Route>
+
+            <Route path='/create' element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+              <Route path='/create' element={<CreatePost />} />
+            </Route>
+
           </Routes>
         </div>
       </Router>
