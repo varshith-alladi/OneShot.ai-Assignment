@@ -4,7 +4,7 @@ import App from "../../App";
 import { Link } from 'react-router-dom'
 
 const Component = styled(AppBar)`
-    background-color: #c0c0c0;
+    background-color: #fffafa;
     color: #000;
 `
 
