@@ -6,7 +6,7 @@ import { styled, Box, Typography } from '@mui/material';
 const Image = styled(Box)`
     width: 100%;
     
-    background-color: #fff5ee;
+    background-color: #f08080;
     height: 50vh;
     display: flex;
     flex-direction: column;
@@ -17,13 +17,15 @@ const Image = styled(Box)`
 const Heading = styled(Typography)`
     font-size: 200px;
     color: #000;
+    text-shadow: 4px 4px #add8e6;
     line-height: 1
 `;
 
 const SubHeading = styled(Typography)`
     font-size: 20px;
-    background: #fff5ee;
-    text-decoration: underline;
+    background: #f08080;
+    color: #ffff;
+    text-decoration: none;
 `;
 
 const Banner = () => {

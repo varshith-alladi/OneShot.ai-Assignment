@@ -11,8 +11,9 @@ const Component = styled(AppBar)`
 const Container = styled(Toolbar)`
     justify-content: center;
     & > a{
-        padding: 20px;
+        padding: 30px;
         color: #000;
+        font-weight: 600;
         text-decoration: none;
     }
 `
