@@ -50,7 +50,8 @@ const Comments = ({post}) => {
                 setComments(response.data);
             }
         }
-        getData();
+        if(post._id)
+            getData();
     }, [toggle, post]);
 
     const handleChange = (e) => {
