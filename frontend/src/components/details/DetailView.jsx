@@ -6,9 +6,12 @@ import {API} from '../../service/api';
 import { Delete, Edit } from '@mui/icons-material';
 import { DataContext } from '../../context/DataProvider';
 
-const Container = styled(Box)`
-    margin: 50px 100px;
-`;
+const Container = styled(Box)(({ theme }) => ({
+    margin: '50px 100px',
+    [theme.breakpoints.down('md')]: {
+        margin: 0
+    },
+}));
 
 const Image = styled('img')({
     width: '100%',
@@ -74,7 +77,7 @@ const DetailView = () => {
 
         let response = await API.deletePost(post._id);
         if(response.isSuccess){
-            navigate('/')
+            navigate('/');
         }
     }
 

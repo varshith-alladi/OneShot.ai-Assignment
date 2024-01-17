@@ -22,13 +22,14 @@ const Image = styled('img')({
 });
 
 const Text = styled(Typography)`
-    color: #878787
-    font-size: 12px;
+    color: #8E8E8E ;
+    font-size: 14px;
+    font-weight: 700;
 `;
 
 const Heading = styled(Typography)`
     font-size: 18px;
-    font-weight: 600
+    font-weight: 700
 `;
 
 const Details = styled(Typography)`
@@ -39,7 +40,7 @@ const Details = styled(Typography)`
 
 
 const post = ({post}) => {
-    const url = post.picture ? post.picture : 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=752&q=80';
+    const url = post.picture ? post.picture : 'https://revenuearchitects.com/wp-content/uploads/2017/02/Blog_pic-450x255.png';
     
     const addEllipsis = (str, limit) => {
         return str.length > limit ? str.substring(0, limit) + '...' : str;
@@ -47,7 +48,7 @@ const post = ({post}) => {
 
     return (
         <Container>
-            <Image src={url} alt="post" />
+            <Image src={url} alt="post" style={{height: 350, marginTop: 10}} />
             <Text>{post.categories}</Text>
             <Heading>{addEllipsis(post.title, 15)}</Heading>
             <Text>Author: {post.username}</Text>
