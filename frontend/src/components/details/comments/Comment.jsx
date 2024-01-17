@@ -18,7 +18,7 @@ const Container = styled(Box)`
 `;
 
 const Name = styled(Typography)`
-    font-weight: 700,
+    font-weight: 700;
     font-size: 18px;
     margin-right: 20px;
 `;
