@@ -27,7 +27,6 @@ app.listen(PORT, () => {
     console.log(`Server is running successfully on PORT: ${PORT}`);
 });
 
-const USERNAME = process.env.DB_USERNAME;
-const PASSWORD = process.env.DB_PASSWORD;
+const dbUrl = process.env.MONGO_URI
 
-Connection(USERNAME, PASSWORD);
+Connection(dbUrl);
